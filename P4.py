@@ -146,15 +146,24 @@ def main():
 
     # Train the neural network using the training set.
     # Do it 60,000 times and make small adjustments each time.
-    neural_network.train(training_set_inputs, training_set_outputs, 60000)
+    neural_network.train(training_set_inputs, training_set_outputs, 3)
 
     print "Stage 2) New synaptic weights after training: "
     neural_network.print_weights()
 
     # Test the neural network with a new situation.
     print "Stage 3) Considering a new situation [0,0,0,0,1,0] -> ?: "
-    hidden_state, output = neural_network.think(array([0,0,0,0,1,0]))
-    print output
+    #hidden_state, output = neural_network.think(array([0,0,0,0,1,0]))
+    result = 0.0
+    for i in range(len(training_set_inputs)):
+        #print(training_set_inputs[i])
+        hidden_state, output = neural_network.think(training_set_inputs[i])
+        x = round(output)
+        #print(x)
+        if x == training_set_outputs[i]:
+            result += 1
+    print ("result #", result)
+    print ("ratio", float(result/64.0))
     
     
 main()
